@@ -11,9 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import snake.v2.source.TableData;
 import javafx.scene.input.KeyCode;
+import javafx.scene.text.Font;
 import snake.v2.source.Food;
 
 public class SnakeV2FXMLController implements Initializable {
@@ -25,11 +27,12 @@ public class SnakeV2FXMLController implements Initializable {
     private int WIDTH;
     private int HEIGHT;
     private int SIZE_OF_BLOCK = 20;
-    private int TIMER = 300;
+    private int TIMER = 200;
     public static int SIZE_X;
     public static int SIZE_Y;
     public static LinkedList<LinkedList> TableXY;
     private LinkedList<LinkedList> copyTable;
+    public Label scoreText;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -59,6 +62,7 @@ public class SnakeV2FXMLController implements Initializable {
 
         //set food
         Food food = new Food();
+        //int score = 0;
 
         //loop
         TimerTask timerTask = new TimerTask() {
@@ -73,7 +77,17 @@ public class SnakeV2FXMLController implements Initializable {
         timer.schedule(timerTask, 0, TIMER);
     }
 
+    public void _drawScore(Snake snake) {
+        gc.setFill(Color.RED);
+        gc.setFont(new Font("Arial", 21));
+        gc.fillText("Score: " + snake.body.size(), 10, 35);
+    }
+
     public boolean _loopFunction(Snake snake, Food food) {
+//        score = snake.score;
+//        scoreText.setText("Score: " + score);
+//        scoreText.setText("Score: " + snake.body.size());
+
         if (!snake._move(TableXY, SnakeV2Main.key)) {
             return false;
         }
@@ -87,6 +101,9 @@ public class SnakeV2FXMLController implements Initializable {
         TableXY.get(food.xPosition).set(food.yPosition, TableData.FOOD);
         _drawBackground(gc);
         _drawOtherObjects(gc, TableXY);
+        _drawScore(snake);
+//        scoreText.setText("Score: " + snake.body.size());
+
         return true;
     }
 

@@ -7,6 +7,7 @@ import snake.v2.SnakeV2FXMLController;
 
 public class Snake {
 
+//    public int score = 0;
     public Head head;
     public ArrayList<Body> body;
 
@@ -39,6 +40,7 @@ public class Snake {
     }
 
     public boolean _move(LinkedList<LinkedList> table, KeyCode key) {
+//        this.score = this.body.size();
         _check(key);
         boolean toReturn = false;
         switch (this.head.view) {
